@@ -4,8 +4,8 @@ import math
 def main():
     choice = "0"
     keyList = generateKeys()
-    publicKeys = keyList[0, 1]
-    privateKeys = keyList[0, 2]
+    publicKeys = (keyList[0], keyList[1])
+    privateKeys = (keyList[0], keyList[2])
     print("RSA keys have been generated.")
     while choice != "3":
         print("Please select your user type:")
@@ -49,7 +49,7 @@ def generateKeys():
     gcdList = extended_gcd(e, phi)
     d = gcdList[0]
     n = p * q
-    return n, e, d
+    return [n, e, d]
 
 
 def extended_gcd(a, b):
