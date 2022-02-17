@@ -1,9 +1,11 @@
 import random
 import math
+import re
 
 def main():
     choice = "0"
     keyList = generateKeys()
+    print(keyList)
     publicKeys = (keyList[0], keyList[1])
     privateKeys = (keyList[0], keyList[2])
     print("RSA keys have been generated.")
@@ -15,6 +17,7 @@ def main():
         choice = input("Enter your choice: ")
         if choice == "1":
             publicUser(publicKeys)
+            
         elif choice == "2":
             owner(privateKeys)
         else:
@@ -68,19 +71,26 @@ def publicUser(publicKeys):
         print("     3. Exit")
         choice = input("Enter your choice: ")
         if choice == "1":
-            inputMessage()
+            inputMessage(publicKeys)
         elif choice == "2":
             AuthSignature()
         else:
             choice = "3"
         
-def inputMessage():
+def inputMessage(publicKeys):
     message = input("Enter a message: ")
-    encrypt(message)
+    encrypt(message,publicKeys)
     print("Message encrypted and sent.")
     
-def encrypt(message):
-    pass
+def encrypt(message,publicKeys):
+    chars = ""
+    for char in message:
+        char = char.upper()
+        chars += str(ord(char))
+        print(chars)
+    C = pow(int(chars), publicKeys[1], publicKeys[0])
+    print(C)
+    
 def AuthSignature():
     pass
 
@@ -97,12 +107,30 @@ def owner(privateKeys):
     else:
         choice = "3"
 
-def decrypt():
-    pass
+def decrypt(C, privateKeys):
+     M1= (pow(C, privateKeys[2], privateKeys[0]))
+     M2= str(M1)
+     pattern = re.compile('.{2}')
+     M3 = (' '.join(pattern.findall(M2)))
+     M3 = M3.split()
+     
+     M4 = ""
+     i=0
+     LL = len(str(M1))/2
+ 
+     while i != LL:
+        for i in M3:
+         M6 = ""
+         M5 = int(i)
+         M6 = chr(M5)
+         M4+= M6
+     else:
+         break
+     return M4
+ 
+     
 def sign():
     pass
-
-
 
 
 main()
